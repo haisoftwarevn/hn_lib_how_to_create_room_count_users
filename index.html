@@ -14,46 +14,14 @@
   </head>
   <body>
     <!--/////////////// hướng dẫn namespace -->
-    <center><h2 id="title">Chat Application</h2></center>
-    <br /><br />
-    <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div class="col-md-6 col-12 col-lg-6">
-          <ul id="msgHis">
-            <li>...todo</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-    <div class="container">
-      <div class="row d-flex justify-content-center">
-        <div class="col-md-6 col-12 col-lg-6">
-          <div class="input-group">
-            <input id="msg" type="text" class="form-control" />
-            <button onclick="sendMsg()" type="button" class="btn btn-info">
-              Send Data
-            </button>
-          </div>
-        </div>
-      </div>
-    </div>
+    <h2 id="msg">Chat Application</h2>
 
     <script src="/socket.io/socket.io.js"></script>
     <script>
       let socket = io();
-
-      socket.on("chat_send", function (msg) {
-        let listItem = document.createElement("li");
-        listItem.textContent = msg;
-        let msgHis = document.getElementById("msgHis");
-        msgHis.appendChild(listItem);
+      socket.on("cooking", function (data) {
+        document.getElementById("msg").innerHTML = data;
       });
-
-      function sendMsg() {
-        let msg = document.getElementById("msg").value;
-        socket.emit("chat", msg);
-        document.getElementById("msg").value = "";
-      }
     </script>
     <!--//////////////////////////////////////////////////-->
     <script

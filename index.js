@@ -15,9 +15,18 @@ const io = new Server(expressServer);
 ////////////////////////////////////////////////
 
 io.on("connection", function (socket) {
-  socket.on("chat", function (msg) {
-    io.emit("chat_send", msg);
-  });
+  socket.join("kitchen-room");
+  let sizeOfKitchen = io.sockets.adapter.rooms.get("kitchen-room").size;
+  io.sockets
+    .in("kitchen-room")
+    .emit("cooking", "hi i am cooking = " + sizeOfKitchen);
+  io.sockets
+    .in("kitchen-room")
+    .emit("boiling", "hi i am boiling = " + sizeOfKitchen);
+
+  socket.join("bed-room");
+  io.sockets.in("bed-room").emit("sleep", "hi i am sleeping = ");
+  io.sockets.in("bed-room").emit("rest", "hi i am in rest");
 });
 
 expressServer.listen(3000, () => {
